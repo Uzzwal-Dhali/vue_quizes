@@ -35,7 +35,7 @@
         ]
       },
       {
-        "id": 1,
+        "id": 2,
         "body": "0.001 X 0.000011",
         "options": [
           {
@@ -60,6 +60,36 @@
             "id": 4,
             "label": "D",
             "answer": "0.11",
+            "isTrue": false
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "body": "Right value of PI",
+        "options": [
+          {
+            "id": 1,
+            "label": "A",
+            "answer": "2.14",
+            "isTrue": false
+          },
+          {
+            "id": 2,
+            "label": "B",
+            "answer": "0.1416",
+            "isTrue": false
+          },
+          {
+            "id": 3,
+            "label": "C",
+            "answer": "3.14",
+            "isTrue": true
+          },
+          {
+            "id": 4,
+            "label": "D",
+            "answer": "3.16",
             "isTrue": false
           }
         ]
