@@ -1,19 +1,21 @@
 <script setup>
-  import { defineEmits } from 'vue';
-  const question = defineProps([
-    'question'
-  ])
-
+  import { defineProps, defineEmits } from 'vue';
   const emit = defineEmits(["selectOption"])
+  const question = defineProps(['question'])
   const emitSelectedOption = (isTrue) => {
     emit("selectOption", isTrue)
   }
 </script>
 
 <template>
-  <h1 class="question">{{ question.question.body }}</h1>
+  <h1 class="question">({{ question.question.id }}) {{ question.question.body }}</h1>
   <div class="options">
-    <div v-for="option in question.question.options" @click="emitSelectedOption(option.isTrue)" class="option">
+    <div
+      v-for="option in question.question.options"
+      :key="option.id"
+      @click="emitSelectedOption(option.isTrue)"
+      class="option"
+    >
       <div class="label">{{ option.label }}</div>
       <div class="answer">{{ option.answer }}</div>
     </div>

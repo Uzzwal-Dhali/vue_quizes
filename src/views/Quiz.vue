@@ -3,19 +3,24 @@
   import { useRoute } from "vue-router"
   import quizes from "../data/quizes.json"
   import Question from "../components/Question.vue"
+  import Result from "../components/Result.vue"
 
   const route = useRoute()
   const subjectID = parseInt(route.params.id)
   const quiz = quizes.find(quiz => quiz.id === subjectID)
   const currentQuestionIndex = ref(0)
   const correctAnswers = ref(0)
+  const showResult = ref(false)
 
   const questionStatus = computed(() => `${currentQuestionIndex.value}/${quiz.questions.length}`)
-  const completion = computed(() => `${currentQuestionIndex.value/quiz.questions.length * 100}%`)
+  const completion = computed(() => `${(currentQuestionIndex.value/quiz.questions.length).toFixed(2) * 100}%`)
 
   const onOptionSelected = (isTrue) => {
     if(isTrue) {
       correctAnswers.value++
+    }
+    if(quiz.questions.length - 1 === currentQuestionIndex.value) {
+      showResult.value = true
     }
     currentQuestionIndex.value++
   }
@@ -27,16 +32,23 @@
       <h1 class="title">{{ quiz.subject }}</h1>
       <div class="status">{{ questionStatus }}</div>
     </header>
-    <div class="bar">
-      <div class="completion" :style="{width: completion}"></div>
+    <div v-if="!showResult" class="quiz-body">
+      <div class="bar">
+        <div class="completion" :style="{width: completion}"></div>
+      </div>
+      <div class="numbers">{{ completion }}</div>
+      <div class="quiz">
+        <Question
+          :question="quiz.questions[currentQuestionIndex]"
+          @selectOption="onOptionSelected"
+        />
+      </div>
     </div>
-    <div class="numbers">{{ completion }}</div>
-    <div class="quiz">
-      <Question
-        :question="quiz.questions[currentQuestionIndex]"
-        @selectOption="onOptionSelected"
-      />
-    </div>
+    <Result
+      v-else
+      :questionsLength="quiz.questions.length"
+      :correctAnswers="correctAnswers"
+    />
   </div>
 </template>
 
